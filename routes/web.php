@@ -7,6 +7,8 @@
 
      Route::group(['prefix'=>'admin', 'middleware'=>'adminlogin'], function(){
 	Route::get('/', 'Admin\OrderController@Dashboard');
+     Route::get('block/{id}', 'Admin\UserController@block');
+     Route::get('open/{id}', 'Admin\UserController@open');
      Route::resource('user', 'Admin\UserController');
      Route::resource('category', 'Admin\CategoryController');
      Route::resource('typewood', 'Admin\TypewoodController');
@@ -44,3 +46,5 @@
 
      Route::get('dathang', 'Client\ClientController@getorder');
      Route::post('dathang', 'Client\ClientController@postorder');
+     Route::get('hoadon/{id}', 'Client\ClientController@check');
+     Route::get('chitiethoadon/{id}', 'Client\ClientController@checkout');

@@ -14,7 +14,7 @@
 							<ul class="nav navbar-nav collapse navbar-collapse">
 								<li><a href="{{ url('trangchu') }}" >Trang chủ</a></li>
 								<li><a href="javascript:;">Giới thiệu</a></li>
-								<li class="dropdown"><a href="javascript:;">Danh mục<i class="fa fa-angle-down"></i></a>
+								<li class="dropdown"><a href="javascript:;">Danh mục<i class=""></i></a>
 								
                                     <ul role="menu" class="sub-menu">
                                     @foreach($category as $item)
@@ -23,7 +23,7 @@
                                     </ul>
                                   
                                 </li> 
-								<li class="dropdown"><a href="javascript:;">Loại gỗ<i class="fa fa-angle-down"></i></a>
+								<li class="dropdown"><a href="javascript:;">Loại gỗ<i class=""></i></a>
                                     <ul role="menu" class="sub-menu">
                                      @foreach($typewood as $item)
                                      <li><a href="{{ url('loaigo/'.$item->id ) }}"> {{ $item->name }}</a></li>	

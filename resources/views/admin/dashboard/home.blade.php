@@ -89,10 +89,10 @@
                                 <div class="details">
                                     <div class="number">
                                         <span data-counter="counterup" 
-                                          data-value="<?= number_format($sum)?>"> VNĐ
+                                          data-value="{{$user}}"> VNĐ
                                         </span>
                                          </div>
-                                    <div class="desc"> Tổng tiền hóa đơn </div>
+                                    <div class="desc"> Thành viên </div>
                                 </div>
                                 <a class="more" href="javascript:;"> 
                                     <i class="m-icon-swapright m-icon-white"></i>
@@ -398,9 +398,20 @@
                                                        {{ $item->user->name }}
                                                       @endif
                                                      </td>
-                                                  <!--   <td> {{ $item->fullname }}  </td> -->
-                                                    <td> {{ $item->phone_number }}  </td>
-                                                    <td> {{ $item->address }}  </td>
+                                                    <td>  
+                                                       @if($item->id_user==0)
+                                                       {{$item->phone_number}}
+                                                       @else
+                                                       {{ $item->user->phone}}
+                                                       @endif 
+                                                   </td>
+                                                    <td> 
+                                                        @if($item->id_user==0)
+                                                       {{$item->address}}
+                                                       @else
+                                                       {{ $item->user->address}}
+                                                       @endif 
+                                                    </td>
                                                     <td style="color: red;">  
                                                        <?= number_format($item->total_price)." " ."VNĐ" ;?>
                                                     </td>
@@ -416,12 +427,12 @@
                                                          @endif
                                                     </td>
                                                      <td> {{ $item->created_at }}  </td>
-                                                    <!-- <td>
+                                                   <!-- <td>
                                                         {!! Form::open(['method' => 'DELETE', 'url' => ['admin/order', $item->id]]) !!}
                                                             <a href="{{ url('admin/order/' . $item->id . '/edit') }}" class="btn btn-sm btn-outline dark pull-right">
                                                                 <i class="fa fa-edit"></i> Cập nhật trạng thái
                                                             </a>  
-                                                            <a href="{{ url('admin/order/' . $item->id) }}" class="btn btn-sm btn-outline dark pull-right">
+                                                            <a href="{ { url('admin/order/' . $item->id) }}" class="btn btn-sm btn-outline dark pull-right">
                                                                 <i class="fa fa-eye"></i>Chi tiết hóa đơn
                                                             </a>      
                                                         {!! Form::close() !!}

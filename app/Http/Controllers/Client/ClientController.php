@@ -23,7 +23,7 @@ class ClientController extends Controller
 {
     function __construct(Request $request)
 	{  
-	  	$product = Product::orderBy('created_at', 'desc')->take(12)->get();
+	  	$product = Product::orderBy('created_at', 'desc')->take(6)->get();
       $rmitem = Product::where('type', '1')->get();
 	    $category = Category::get();
 	    $typewood= Typewood::get();
@@ -50,7 +50,7 @@ class ClientController extends Controller
                    })
                    ->paginate(5);
         } else {
-           $product=Product::orderBy( 'created_at', 'desc' )->take(12)
+           $product=Product::orderBy( 'created_at', 'desc' )->take(6)
                    ->get();
         }
 
@@ -60,7 +60,7 @@ class ClientController extends Controller
    public function category($id) 
    {
    	$cate = Category::find($id);
-    $category1 = Product::where('category_id', $id)->paginate(15);
+    $category1 = Product::where('category_id', $id)->paginate(6);
 
     return view('client.pages.category', [ 'category1'=>$category1, 'cate'=>$cate ]);
    }
@@ -68,7 +68,7 @@ class ClientController extends Controller
    public function typewood($id) 
    {
    	$type = Typewood::find($id); 
-   	$typewood1 = Product::where('type_of_wood_id', $id)->paginate(15);
+   	$typewood1 = Product::where('type_of_wood_id', $id)->paginate(6);
 
     return view('client.pages.typewood', [ 'typewood1'=>$typewood1, 'type'=>$type ]);
    }
@@ -141,8 +141,13 @@ class ClientController extends Controller
               'email' =>'required|min:4|max:32',
               'password'=>'required|min:4|max:32'
             ]);
-         if (Auth::attempt(['email'=>$request->email ,'password'=>$request->password])) {
+         if (Auth::attempt(['email'=>$request->email ,'password'=>$request->password, 'is_active'=>0 ])) {
                  return redirect('trangchu'); 
+         }
+         elseif ( ['is_active'=>1] ) {
+
+             Session::flash('error', 'Tai khoản của bạn đã bị khóa hãy gửi mail đến admin@gmail.com để mở tài khoản  !!!');
+              return redirect('dangnhap');
          }
          else
          {
@@ -231,7 +236,7 @@ class ClientController extends Controller
    
    public function postorder(Request $request)
    {
-      $customer = new Customer;
+      
       $content = Cart::content();
 
       if( Auth::user() ) {
@@ -255,28 +260,20 @@ class ClientController extends Controller
         $order->total_price = $total; 
         $order->save();
       } else {
-        $customer = new Customer();
+       
         $this->validate($request, [
               'fullname' =>'required',
-              'phone_number' =>'required|min:10|max:11|unique:customer,phone_number',
-              'email'  => 'required|unique:customer,email',
+              'phone_number' =>'required|min:10|max:11|unique:order,phone_number',
               'address' =>'required',
           ]);
-        $customer->fullname = $request->fullname;
-        $customer->email = $request->email;
-        $customer->phone_number = $request->phone_number;
-        $customer->gender = $request->gender;
-        $customer->birthday = $request->birthday;
-        $customer->address = $request->address;
-        $customer->save();
-
         $order = new Order();
-        $order->fullname = $customer->fullname;
-        $order->phone_number = $customer->phone_number;
-        $order->address = $customer->address;
+        $order->fullname = $request->fullname;
+        $order->email = $request->email;
+        $order->phone = $request->phone_number;
+        $order->address = $request->address;
         $order->save();
 
-         $total = 0;
+        $total = 0;
          $content = Cart::content();
          foreach ($content as $index => $item) {
            $orderDetail = new OrderDetail();
@@ -292,10 +289,23 @@ class ClientController extends Controller
         $order->total_price = $total; 
         $order->save();  
       }
-
       Cart::destroy();
       Session::flash('success', 'Bạn đã đặt hàng thành công , Chúng tôi sẽ sớm giao hàng cho bạn. Cảm ơn bạn.');
 
       return redirect('giohang');
+   }
+
+   public function check($id)
+   {
+       $order = Order::where('id_user', $id)->get();
+     
+       return view('client.pages.check', [ 'order'=> $order ]);
+   }
+
+  public function checkout($id)
+   {
+       $orderdetail = OrderDetail::where('order_id', $id)->get();
+
+       return view('client.pages.checkout', [ 'orderdetail' => $orderdetail]);
    }
 }
