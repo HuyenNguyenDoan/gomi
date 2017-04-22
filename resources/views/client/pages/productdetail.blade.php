@@ -94,7 +94,7 @@
 										<ul class="media-list">
 											<li class="media">
 												<a class="pull-left" href="#">
-													<img class="media-object" src="client/images/blog/man-two.jpg" alt="">
+													<img class="media-object" src="client/images/blog/man-one.jpg" alt="" width="121px" height="86px">
 												</a>
 												<div class="media-body">
 													<ul class="sinlge-post-meta">

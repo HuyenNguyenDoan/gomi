@@ -40,12 +40,12 @@
                         <span class="title1">Hóa đơn</span>
                     </a>
                 </li>
-                <li class="nav-item   ">
+                <!-- <li class="nav-item   ">
                     <a href="{{ url('admin/customer') }}" class="nav-link ">
                         <i class="glyphicon glyphicon-user"></i>
                         <span class="title1">Khách hàng</span>
                     </a>
-                </li>
+                </li> -->
             </ul>
         </li>
         <li class="nav-item  ">
@@ -81,6 +81,7 @@
                 </li>          
             </ul>
         </li>
+        @if(Auth::user()->level == 1)
         <li class="nav-item  ">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="icon-settings"></i>
@@ -96,6 +97,7 @@
                 </li>
             </ul>
         </li>
+        @endif
         <li class="nav-item  ">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="glyphicon glyphicon-phone-alt"></i>

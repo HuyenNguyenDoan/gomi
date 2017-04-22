@@ -47,10 +47,11 @@
 									</a>
 								</li>
                                @if(Auth::user() )
+                                <li><a href="{{ url('hoadon/'.Auth::user()->id) }}"><i class="fa fa-crosshairs"></i>Xem hóa đơn</a>
                                 <li><a href="{{ url('nguoidung') }}"><i class="fa fa-user"></i> 
                                   {{Auth::user()->name}}
                                 </a></li>
-								<li><a href="{{ url('dangxuat') }}"><i class="glyphicon glyphicon-plus-sign"></i> Đăng xuất</a></li>
+								<li><a href="{{ url('dangxuat') }}"><i class="glyphicon glyphicon-plus-sign"></i>Đăng xuất</a></li>
                                @else
                                 <li><a href="{{ url('dangnhap') }}"><i class="fa fa-lock"></i> Đăng nhập</a></li>
 								<li><a href="{{ url('dangky') }}"><i class="glyphicon glyphicon-plus-sign"></i> Đăng ký</a></li>

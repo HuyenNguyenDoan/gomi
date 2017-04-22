@@ -123,6 +123,7 @@ class OrderController extends Controller
         $contact = Contact::count();
         $order1 = Order::count();
         $sum = Order::sum('total_price');
+        $user = User::count();
         $product = Product::count();
 
        
@@ -162,6 +163,6 @@ class OrderController extends Controller
          ->where('created_at','<=',$ytd5->toDateString()." ".'23:59:59')->count(); 
              
         return view('admin.dashboard.home', [ 'list'=>$list , 'contact'=>$contact, 'order1'=>$order1, 'product'=>$product, 'sum'=>$sum, 'now'=>$now, 'co'=>$co , 'ytd11'=>$ytd11, 'co1'=>$co1 , 'ytd12'=>$ytd12 , 'co2'=>$co2 , 'ytd13'=>$ytd13, 'co3'=>$co3, 'ytd14'=>$ytd14, 'co4'=>$co4, 'ytd15'=>$ytd15, 
-            'co5'=> $co5 , 'ytd16'=>$ytd16, 'co6'=>$co6 ]);
+            'co5'=> $co5 , 'ytd16'=>$ytd16, 'co6'=>$co6, 'user'=>$user]);
     }
 }

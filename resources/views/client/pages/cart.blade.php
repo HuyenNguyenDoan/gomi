@@ -135,15 +135,6 @@
 									<input type="text" name="fullname" placeholder="Họ và tên *" required="">
 									<input type="email" name="email" placeholder="Email *" required="">
 									<input type="text"  name="phone_number" placeholder="Số điện thoại *" required="">
-								    <br/>	
-									<select name="gender">
-									  <option value="0">Nữ</option>
-									  <option value="1">Nam</option>
-									  <option value="2">Khác</option>
-									</select>
-									<br/><br/>
-									<input type="date"  name="birthday" placeholder="Ngày sinh *">
-									
 									<input type="text" name="address" placeholder="Địa chỉ *" required="">
 									
 									<button type="submit" class="btn btn-warning">Đặt hàng</button>
@@ -154,5 +145,5 @@
 			 @endif			
 			</div>		
 		<!-- </div> -->
-	</section>
+  </section>
 @endsection

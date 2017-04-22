@@ -19,6 +19,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        if(Auth::user()->level == 1) {
         $keyword = '';
         if($keyword=$request->search){
            $list=User::orderBy('id','ASC')
@@ -31,8 +32,11 @@ class UserController extends Controller
            $list=User::orderBy( 'id', 'ASC' )
                    ->paginate(5);
         }
-       
+         
         return view('admin.user.list',['list'=>$list,'keyword'=>$keyword]);
+       } else {
+         return redirect('admin');
+       }
     }
 
     /**
@@ -140,6 +144,21 @@ class UserController extends Controller
 
         return redirect('admin/user');
     }
+
+    public function block($id)
+    {
+       $user = User::find($id);
+       if($user->is_active == 0 ) {
+           $user->is_active=1;
+           $user->save();
+           Session::flash('success', 'Khóa tài khoản Người dùng "'.$user->name.'" thành công');
+       } else {
+           $user->is_active=0;
+           $user->save();
+           Session::flash('success', 'Mở tài khoản Người dùng "'.$user->name.'" thành công');
+       }
+        return redirect('admin/user');
+    }
     
     public function getLogin()
     {
@@ -153,12 +172,14 @@ class UserController extends Controller
               'email' =>'required',
               'password'=>'required'
             ]);
-         if (Auth::attempt(['email'=>$request->email ,'password'=>$request->password])) {
+         if (Auth::attempt(['email'=>$request->email , 'password'=>$request->password,  'is_active'=>0])) {
 
             return redirect('admin'); 
          }
+
+
          else {
-           Session::flash('error', 'Sign in not successfully !!!');
+           Session::flash('error', 'Đăng nhập không thành công!!!');
 
            return redirect('admin/login');
          }

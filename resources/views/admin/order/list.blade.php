@@ -42,8 +42,8 @@
                         <thead class="flip-content">
                             <tr>
                                 <th> #</th>
-                                <th> Mã người dùng</th>
-                                <th> Họ tên</th>
+                                <th> Người dùng </th>
+                                <th> Email</th> 
                                 <th> Số điện thoại </th>
                                 <th> Địa chỉ</th>
                                 <th> Tổng tiền</th>
@@ -56,10 +56,34 @@
                             @foreach ($list as $key => $item)
                                 <tr>
                                     <td> {{ $key+ $list->firstItem() }} </td>
-                                    <td> {{ $item->id_user }}  </td>
-                                    <td> {{ $item->fullname }}  </td>
-                                    <td> {{ $item->phone_number }}  </td>
-                                    <td> {{ $item->address }}  </td>
+                                    <td>
+                                      @if($item->id_user==0)
+                                      {{$item->fullname}}
+                                      @else
+                                       {{ $item->user->name }}
+                                      @endif
+                                     </td>
+                                     <td>
+                                      @if($item->id_user==0)
+                                        {{$item->email}}
+                                      @else
+                                       {{ $item->user->email }}
+                                      @endif
+                                     </td>
+                                    <td> 
+                                      @if($item->id_user==0)
+                                        {{$item->phone_number}}
+                                      @else
+                                       {{ $item->user->phone }}
+                                      @endif
+                                    </td>
+                                    <td> 
+                                       @if($item->id_user==0)
+                                        {{$item->address}}
+                                      @else
+                                       {{ $item->user->address }}
+                                      @endif
+                                    </td>
                                     <td style="color: red;">  
                                        <?= number_format($item->total_price)." " ."VNĐ" ;?>
                                     </td>

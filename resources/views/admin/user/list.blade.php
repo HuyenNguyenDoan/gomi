@@ -3,6 +3,16 @@
 @section('title')
  <title>Người dùng</title>
 @endsection
+@section('js')
+   <!-- <script type="text/javascript">
+        $(document).ready(function(){
+           $('.block').click(function() {
+            
+           });
+        });
+
+   </script> -->
+@endsection
 @section('breadcrumb')
  <div class="page-bar">
     <ul class="page-breadcrumb">
@@ -71,21 +81,33 @@
                                     <td> {{ $item->birthday }}</td>
                                     <td> 
                                      @if($item->level==1)
-                                      <span style="color:green;">{{'Quản trị'}}</span>
-                                     @else 
+                                      <span style="color:red;">{{'Admin'}}</span>
+                                     @elseif($item->level==2) 
+                                       <span style="color:green;">{{'Quản trị viên '}}</span> 
+                                    @else   
                                        {{'Thành viên'}}
                                      @endif
                                     </td>
                                     <td>
                                         {!! Form::open(['method' => 'DELETE', 'url' => ['admin/user', $item->id]]) !!}
+                                           
                                             
+                                           @if(Auth::user()->id != $item->id)
                                             <button type="submit" class="btn btn-sm btn-outline red pull-right" onclick="return confirm('Bạn có chắc muốn xóa người dùng này ?');">
                                                 <i class="fa fa-remove"></i> Xóa
                                             </button>
-                                           
-                                            <a href="{{ url('admin/user/' . $item->id . '/edit') }}" class="btn btn-sm btn-outline dark pull-right">
-                                                <i class="fa fa-edit"></i> Sửa
-                                            </a>
+                                           @else
+
+                                           @endif 
+                                            @if($item->is_active == 0) 
+                                            <a href="{{ url('admin/block/'.$item->id) }}" class="btn btn-sm btn-outline dark pull-right block">
+                                                <i class="fa fa-edit open"> Khóa tài khoản </i> 
+                                            </a> 
+                                            @else 
+                                              <a href="{{ url('admin/block/'.$item->id) }}" class="btn btn-sm btn-outline dark pull-right block">
+                                                <i class="fa fa-lock open"> Mở tài khoản </i> 
+                                            </a> 
+                                            @endif   
                                         {!! Form::close() !!}
                                     </td>
                                 </tr>

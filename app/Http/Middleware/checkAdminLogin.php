@@ -16,7 +16,7 @@ class checkAdminLogin
         if(Auth::check())
         {
             $user = Auth::user();
-             if($user->level==1)
+             if($user->level==1 || $user->level==2 )
             
             return $next($request);
         else
